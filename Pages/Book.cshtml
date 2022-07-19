@@ -1,0 +1,53 @@
+﻿@page
+@using BookStore.Models;
+@model BookStore.Pages.BookModel
+@{
+    ViewData["Title"] = "Book";
+}
+
+<h1>Pizza List 🍕</h1>
+<form method="post" class="card p-3">
+    <div class="row">
+        <div asp-validation-summary="All"></div>
+    </div>
+    <div class="form-group mb-0 align-middle">
+        <label asp-for="NewBook.Title">Name</label>
+        <input type="text" asp-for="NewBook.Title" class="mr-5">
+        <label asp-for="NewBook.PageCount">PageCount</label>
+         <input asp-for="NewBook.PageCount" class="mr-5" />
+        <label asp-for="NewBook.PublishDate">PublishDate</label>
+        <input asp-for="NewBook.PublishDate" class="mr-5" />
+        @* <label asp-for="NewPizza.IsGlutenFree">Gluten Free</label>
+        <input type="checkbox" asp-for="NewPizza.IsGlutenFree" class="mr-5"> *@
+        <button class="btn btn-primary">Add</button>
+    </div>
+</form>
+<table class="table mt-5">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Size</th>
+            <th scope="col">Gluten Free</th>
+            <th scope="col">Delete</th>
+        </tr>
+    </thead>
+    @foreach (var book in Model.books)
+    {
+        <tr>
+            <td>@book.Title</td>
+           
+            <td>@book.PageCount</td>
+            <td>@book.PublishDate</td>
+            <td>
+                <form method="post" asp-page-handler="Delete" asp-route-id="@book.Id">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+}
